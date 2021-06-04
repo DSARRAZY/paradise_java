@@ -1,7 +1,7 @@
 package com.formation.app.dao;
 
-import com.formation.app.dao.jbdc.JdbcPlaceDao;
-import com.formation.app.dao.jbdc.JdbcTripDao;
+import com.formation.app.dao.jdbc.JdbcPlaceDao;
+import com.formation.app.dao.jdbc.JdbcTripDao;
 
 import java.sql.SQLException;
 

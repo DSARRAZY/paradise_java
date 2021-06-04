@@ -1,4 +1,4 @@
-package com.formation.app.dao.jbdc;
+package com.formation.app.dao.jdbc;
 
 import com.formation.app.util.ConnectionManager;
 
