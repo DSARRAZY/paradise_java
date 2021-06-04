@@ -120,14 +120,19 @@ public class Launcher {
      * @throws SQLException
      */
     private static Place findPlace() throws SQLException {
-        int userChoice;
+        Scanner scanner = new Scanner(System.in);
         System.out.print("Please enter the id of the place : ");
-        long placeId = getUserChoice();
-        Place place = DaoFactory.getPlaceDao().findPlaceById(placeId);
+        int choice = scanner.nextInt();
+        Place place = DaoFactory.getPlaceDao().findPlaceById((long) choice);
         displayPlace(place);
         return place;
     }
 
+
+    /**
+     * Display a place
+     * @param place
+     */
     private static void displayPlace(Place place) {
         if(place != null) {
             System.out.println("Place : " + place.getName());
