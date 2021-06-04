@@ -79,19 +79,43 @@ public class JdbcPlaceDao extends JdbcDao implements PlaceDao<Long, Place> {
     }
 
     @Override
-    public boolean updatePlace(Place place) {
-        return false;
+    public boolean updatePlace(Place placeToUpdate) {
+        int updateRows = 0;
+        String query = "UPDATE Place SET name=? WHERE id=?";
+        Connection connection = ConnectionManager.getConnection();
+        try (PreparedStatement pst = connection.prepareStatement(query)) {
+            pst.setString(1, placeToUpdate.getName());
+            pst.setLong(2, placeToUpdate.getId());
+            pst.execute();
+
+            updateRows = pst.executeUpdate();
+
+            // Fetching inserted id
+            connection.commit();
+
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+                e2.printStackTrace();
+            }
+        }
+        return updateRows > 0;
+
     }
 
-    @Override
-    public boolean removePlace(Place p) {
-        return false;
-    }
 
-    @Override
-    public Place findAllPlace() {
-        return null;
-    }
+
+//    @Override
+//    public boolean removePlace(Place) {
+//        return false;
+//    }
+//
+//    @Override
+//    public Place findAllPlace() {
+//        return null;
+//    }
 
 
 }

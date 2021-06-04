@@ -30,9 +30,9 @@ public class Launcher {
                 findPlace();
             break;
 
-//            case "4":
-//
-//                break;
+            case 4:
+                editPlace();
+               break;
 
             default:
                 System.out.println("Wrong input \n");
@@ -142,6 +142,24 @@ public class Launcher {
     }
 
 
+    /**
+     * Edit a place
+     * @throws SQLException
+     */
+    private static void editPlace() throws SQLException {
+        Place place = findPlace();
+        if(place != null) {
+            System.out.print("Enter the new name : ");
+            Scanner scanner = new Scanner(System.in);
+            String newName = scanner.nextLine();
+            place.setName(newName);
+            if(DaoFactory.getPlaceDao().updatePlace(place)) {
+                System.out.println("Place updated !");
+            } else {
+                System.out.println("Error during update.");
+            }
+        }
+    }
 
 
 
