@@ -26,10 +26,10 @@ public class Launcher {
                 addPlace();
                 break;
 
-//            case "3":
-//
-//                break;
-//
+          case 3:
+                findPlace();
+            break;
+
 //            case "4":
 //
 //                break;
@@ -62,6 +62,27 @@ public class Launcher {
         System.out.println();
     }
 
+    /**
+     * Control input Client
+     * @param scanner
+     * @param prompt
+     * @param promptOnError
+     * @return
+     */
+    public static int readInt(Scanner scanner, String prompt, String promptOnError) {
+
+        System.out.print(prompt);
+
+        while ( !scanner.hasNextInt() ) {
+            System.out.print(promptOnError);
+            scanner.nextLine();
+        }
+
+        final int input = scanner.nextInt();
+        scanner.nextLine();
+        return input;
+
+    }
 
     /**
      * Display All Place
@@ -94,26 +115,28 @@ public class Launcher {
 
 
     /**
-     * Control input Client
-     * @param scanner
-     * @param prompt
-     * @param promptOnError
+     * Find a place by id
      * @return
+     * @throws SQLException
      */
-    public static int readInt(Scanner scanner, String prompt, String promptOnError) {
-
-        System.out.print(prompt);
-
-        while ( !scanner.hasNextInt() ) {
-            System.out.print(promptOnError);
-            scanner.nextLine();
-        }
-
-        final int input = scanner.nextInt();
-        scanner.nextLine();
-        return input;
-
+    private static Place findPlace() throws SQLException {
+        int userChoice;
+        System.out.print("Please enter the id of the place : ");
+        long placeId = getUserChoice();
+        Place place = DaoFactory.getPlaceDao().findPlaceById(placeId);
+        displayPlace(place);
+        return place;
     }
+
+    private static void displayPlace(Place place) {
+        if(place != null) {
+            System.out.println("Place : " + place.getName());
+        } else {
+            System.out.println("Unknown place.");
+        }
+    }
+
+
 
 
 
