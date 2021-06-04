@@ -15,36 +15,35 @@ public class Launcher {
         Scanner scanner = new Scanner(System.in);
         JdbcPlaceDao jdbcPlaceDao = new JdbcPlaceDao();
         displayMenu();
-        String reponse = scanner.nextLine();
+        int number = readInt(scanner,"Enter un number only : ", "This is not a number. Try again : ");
 
-        switch (reponse) {
-            case "1":
+        switch (number) {
+            case 1:
                 allPlace();
                 break;
 
-            case "2":
-
-                break;
-
-            case "3":
-
-                break;
-
-            case "4":
-
-                break;
+//            case "2":
+//
+//                break;
+//
+//            case "3":
+//
+//                break;
+//
+//            case "4":
+//
+//                break;
 
             default:
-                System.out.println("Erreur de saisi clavier !! \n");
+                System.out.println("Wrong input \n");
                 break;
         }
     }
 
 
-
-
-
-
+    /**
+     * Display Menu client
+     */
     private static void displayMenu() {
         System.out.println();
         System.out.println("What do you want to do ?");
@@ -63,6 +62,11 @@ public class Launcher {
         System.out.println();
     }
 
+
+    /**
+     * Display All Place
+     * @throws SQLException
+     */
     private static void allPlace() throws SQLException {
         List<Place> placeList = DaoFactory.getPlaceDao().findAll();
             for (Place f: placeList) {
@@ -70,7 +74,27 @@ public class Launcher {
        }
     }
 
+    /**
+     * Control input Client
+     * @param scanner
+     * @param prompt
+     * @param promptOnError
+     * @return
+     */
+    public static int readInt(Scanner scanner, String prompt, String promptOnError) {
 
+        System.out.print(prompt);
+
+        while ( !scanner.hasNextInt() ) {
+            System.out.print(promptOnError);
+            scanner.nextLine();
+        }
+
+        final int input = scanner.nextInt();
+        scanner.nextLine();
+        return input;
+
+    }
 
 
 
