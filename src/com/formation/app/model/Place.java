@@ -14,6 +14,9 @@ public class Place {
         this.name = name;
     }
 
+    public Place(String placeName) {
+    }
+
     public Long getId() {
         return id;
     }

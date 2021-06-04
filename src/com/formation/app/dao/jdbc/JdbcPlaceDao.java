@@ -4,9 +4,7 @@ import com.formation.app.dao.PlaceDao;
 import com.formation.app.model.Place;
 import com.formation.app.util.ConnectionManager;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,12 +33,49 @@ public class JdbcPlaceDao extends JdbcDao implements PlaceDao<Long, Place> {
     }
 
     @Override
-    public void createPlace(Place place) {
+    public Place createPlace(Place placeToCreate) {
+        Place createdPlace = null;
+        String query = "INSERT INTO Place (name) VALUES (?)";
+        Connection connection = ConnectionManager.getConnection();
+        try(PreparedStatement pst = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            pst.setString(1, placeToCreate.getName());
+            pst.execute();
+
+            ResultSet resultSet = pst.getGeneratedKeys();
+            resultSet.next();
+            Long id = resultSet.getLong(1);
+
+            createdPlace = findPlaceById(id);
+
+            // Fetching inserted id
+            connection.commit();
+
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+                e2.printStackTrace();
+            }
+        }
+        return createdPlace;
     }
 
     @Override
     public Place findPlaceById(Long id) {
-        return null;
+        String query = "SELECT * FROM Place WHERE id = ?";
+       Place foundPlace = null;
+        try(PreparedStatement pst= ConnectionManager.getConnection().prepareStatement(query) ) {
+            pst.setLong(1, id);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                foundPlace = mapToPlace(rs);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return foundPlace;
     }
 
     @Override

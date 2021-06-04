@@ -22,10 +22,10 @@ public class Launcher {
                 allPlace();
                 break;
 
-//            case "2":
-//
-//                break;
-//
+            case 2:
+                addPlace();
+                break;
+
 //            case "3":
 //
 //                break;
@@ -73,6 +73,25 @@ public class Launcher {
            System.out.println("ID " + f.getId() + " Place : " + f.getName());
        }
     }
+
+    /**
+     *  Add a place by user
+     * @throws SQLException
+     */
+    private static void addPlace() throws SQLException {
+        Place place = new Place();
+        System.out.print("Name: ");
+        String name = new Scanner(System.in).nextLine();
+        place.setName(name);
+        Place id = DaoFactory.getPlaceDao().createPlace(place);
+
+        if(id != null) {
+            System.out.println("Place added with the ID=" + id.getId() + ".");
+        } else {
+            System.out.println("Error, impossible to add the place.");
+        }
+    }
+
 
     /**
      * Control input Client

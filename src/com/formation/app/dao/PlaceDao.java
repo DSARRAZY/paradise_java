@@ -2,13 +2,13 @@ package com.formation.app.dao;
 
 import com.formation.app.model.Place;
 
-import java.util.List;
 import java.sql.SQLException;
+import java.util.List;
 
 public interface PlaceDao<ID, T> {
 
-    void createPlace(Place place);
-    Place findPlaceById(Long id);
+    T createPlace(T object) throws SQLException;
+    T findPlaceById(ID id);
     boolean updatePlace(Place place);
     boolean removePlace(Place p);
     Place findAllPlace();
