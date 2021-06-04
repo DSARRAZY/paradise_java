@@ -3,13 +3,7 @@ package com.formation.app.dao.jbdc;
 import com.formation.app.dao.PlaceDao;
 import com.formation.app.model.Place;
 
-import java.sql.*;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-public class JbdcPlaceDao extends JbdcDao implements PlaceDao {
+public class JdbcPlaceDao extends JdbcDao implements PlaceDao {
 
 
     @Override

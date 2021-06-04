@@ -6,7 +6,7 @@ import com.formation.app.model.Trip;
 
 import java.util.List;
 
-public class JbdcTripDao extends JbdcDao implements TripDao {
+public class JdbcTripDao extends JdbcDao implements TripDao {
 
 
     @Override
