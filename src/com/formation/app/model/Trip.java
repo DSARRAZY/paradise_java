@@ -3,8 +3,8 @@ package com.formation.app.model;
 public class Trip {
 
     private Long id;
-    private String departure;
-    private String destination;
+    private Place departure;
+    private Place destination;
     private float price;
 
 
@@ -12,7 +12,7 @@ public class Trip {
 
     }
 
-    public String getDeparture() {
+    public Place getDeparture() {
         return departure;
     }
 
@@ -24,11 +24,11 @@ public class Trip {
         this.id = id;
     }
 
-    public String getDestination() {
+    public Place getDestination() {
         return destination;
     }
 
-    public void setDestination(String destination) {
+    public void setDestination(Place destination) {
         this.destination = destination;
     }
 
@@ -40,7 +40,7 @@ public class Trip {
         this.price = price;
     }
 
-    public void setDeparture(String departure) {
+    public void setDeparture(Place departure) {
         this.departure = departure;
     }
 
