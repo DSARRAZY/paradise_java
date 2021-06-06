@@ -10,7 +10,7 @@ public interface PlaceDao<ID, T> {
     T createPlace(T object) throws SQLException;
     T findPlaceById(ID id);
     boolean updatePlace(Place place);
-    //boolean removePlace(Place p);
+    boolean removePlace(Place place);
     List<T> findAll();
 
 }

@@ -2,7 +2,9 @@ package com.formation.app;
 
 import com.formation.app.dao.DaoFactory;
 import com.formation.app.dao.jdbc.JdbcPlaceDao;
+import com.formation.app.dao.jdbc.JdbcTripDao;
 import com.formation.app.model.Place;
+import com.formation.app.model.Trip;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -33,6 +35,14 @@ public class Launcher {
             case 4:
                 editPlace();
                break;
+
+            case 5:
+                //removePlace();
+                break;
+
+            case 6:
+                addTrip();
+                break;
 
             default:
                 System.out.println("Wrong input \n");
@@ -161,6 +171,50 @@ public class Launcher {
         }
     }
 
+//    /**
+//     * Delete a place
+//     * @throws SQLException
+//     */
+//    private static void removePlace() throws SQLException {
+//        Place place = findPlace();
+//        if(place != null) {
+//            System.out.println("All trips with this Place will be removed with it.\n Are you sure you want to remove it ? [yes/no]");
+//            Scanner scanner = new Scanner(System.in);
+//            String choice = scanner.next();
+//            if(choice.equalsIgnoreCase("yes")) {
+//                if(DaoFactory.getPlaceDao().removePlace(place)) {
+//                    System.out.println("Place removed !");
+//                } else {
+//                    System.out.println("Impossible to remove the Place.");
+//                }
+//            }
+//        }
+//    }
 
+    private static void addTrip() throws SQLException {
+        Trip trip = new Trip();
+
+        System.out.print("Departure: ");
+        Place place = findPlace();
+        trip.setDeparture(place);
+
+        System.out.print("Destination: ");
+        place = findPlace();
+        trip.setDestination(place);
+
+        System.out.print("Price: ");
+        Float price = Float.valueOf(new Scanner(System.in).nextInt());
+        trip.setPrice(price);
+
+        Trip id = DaoFactory.getTripDao().createTrip(trip);
+
+        if (id != null) {
+            System.out.println("Trip added with the ID= " + id.getId() + " FROM " + trip.getDeparture());
+        } else {
+            System.out.println("Error, impossible to add the trip.");
+        }
+
+    }
 
 }
+

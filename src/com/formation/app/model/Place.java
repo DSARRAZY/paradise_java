@@ -5,16 +5,12 @@ public class Place {
     private Long id;
     private String name;
 
-    public Place() {
-
-    }
-
     public Place(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Place(String placeName) {
+    public Place() {
     }
 
     public Long getId() {
@@ -22,15 +18,19 @@ public class Place {
     }
 
     public void setId(Long id) {
+
         this.id = id;
     }
 
     public String getName() {
+
         return name;
     }
 
     public void setName(String name) {
+
         this.name = name;
     }
+
 
 }

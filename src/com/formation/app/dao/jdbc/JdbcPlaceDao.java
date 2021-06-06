@@ -106,16 +106,32 @@ public class JdbcPlaceDao extends JdbcDao implements PlaceDao<Long, Place> {
     }
 
 
+    @Override
+    public boolean removePlace(Place place) {
+            boolean isDeleted = false;
+            String query = "DELETE FROM Place WHERE id = ?";
+            Connection connection = ConnectionManager.getConnection();
+            try(PreparedStatement pst= ConnectionManager.getConnection().prepareStatement(query) ) {
+                pst.setLong(1, place.getId());
+                isDeleted = pst.execute();
+                connection.commit();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+                try {
+                    connection.rollback();
+                } catch (SQLException e2){
+                    e2.printStackTrace();
+                }
+            }
+            return isDeleted;
+        }
+    }
 
-//    @Override
-//    public boolean removePlace(Place) {
-//        return false;
-//    }
-//
+
 //    @Override
 //    public Place findAllPlace() {
 //        return null;
 //    }
 
 
-}
+
