@@ -6,19 +6,37 @@ import com.formation.app.model.Trip;
 import com.formation.app.util.ConnectionManager;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JdbcTripDao extends JdbcDao implements TripDao<Long, Trip> {
 
+
+    public List<Trip> findAll() {
+        List<Trip> tripList = new ArrayList<>();
+
+        String query = "SELECT * FROM Trip";
+        try (Statement st = ConnectionManager.getConnection().createStatement()) {
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                tripList.add(mapToTrip(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tripList;
+    }
+
+
     @Override
     public Trip createTrip(Trip tripToCreate) {
             Trip createdTrip = null;
-            String query = "INSERT INTO Trip (price,destination,departure) VALUES (?,?,?)";
+            String query = "INSERT INTO Trip (departure,destination,price) VALUES (?,?,?)";
             Connection connection = ConnectionManager.getConnection();
             try(PreparedStatement pst = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-                pst.setFloat(1, tripToCreate.getPrice());
-                pst.setLong(2, tripToCreate.getDestination().getId());
-                pst.setLong(3, tripToCreate.getDeparture().getId());
+                pst.setObject(1, tripToCreate.getDeparture());
+                pst.setObject(2, tripToCreate.getDestination());
+                pst.setFloat(3, tripToCreate.getPrice());
                 pst.execute();
 
                 ResultSet resultSet = pst.getGeneratedKeys();
@@ -43,10 +61,10 @@ public class JdbcTripDao extends JdbcDao implements TripDao<Long, Trip> {
 
     private Trip mapToTrip(ResultSet rs) throws SQLException {
         Long id = rs.getLong("id");
-        Float price = rs.getFloat("price");
         String departure = rs.getString("departure");
         String destination = rs.getString("destination");
-        return new Trip(id, price, destination, departure);
+        Float price = rs.getFloat("price");
+        return new Trip(id,departure, destination,price);
     }
 
 

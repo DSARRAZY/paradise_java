@@ -5,16 +5,24 @@ public class Trip {
     private Long id;
     private Place departure;
     private Place destination;
-    private float price;
+    private Float price;
 
+
+    public Trip(Place departure, Place destination, Float price) {
+        this.departure = departure;
+        this.destination = destination;
+        this.price = price;
+    }
+
+    public Trip(Long id, String departure, String destination, Float price) {
+    }
 
     public Trip() {
+
     }
 
-    public Trip(Long id, Float price, String destination, String departure) {
-    }
 
-    public Place getDeparture() {
+    public Place getDeparture (){
 
         return departure;
     }
@@ -39,7 +47,7 @@ public class Trip {
         this.destination = destination;
     }
 
-    public  float getPrice() {
+    public float getPrice() {
 
         return price;
     }

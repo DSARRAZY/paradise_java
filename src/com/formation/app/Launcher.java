@@ -41,6 +41,10 @@ public class Launcher {
                 break;
 
             case 6:
+                allTrip();
+                break;
+
+            case 7:
                 addTrip();
                 break;
 
@@ -64,11 +68,12 @@ public class Launcher {
         System.out.println("4 - Edit a place");
         System.out.println("5 - Remove a place");
        ;
-        System.out.println("6 - Add a trip");
-        System.out.println("7 - Find a trip");
-        System.out.println("8 - Remove a trip");
+        System.out.println("6 - List all of trip");
+        System.out.println("7 - Add a trip");
+        System.out.println("8 - Find a trip");
+        System.out.println("9 - Remove a trip");
 
-        System.out.println("9 - Quit");
+        System.out.println("10 - Quit");
         System.out.println();
     }
 
@@ -191,6 +196,21 @@ public class Launcher {
 //        }
 //    }
 
+    /**
+     * All of Trip
+     * @throws SQLException
+     */
+    private static void allTrip() throws SQLException {
+        List<Trip> tripList = DaoFactory.getTripDao().findAll();
+        for (Trip f: tripList) {
+            System.out.println("ID " + f.getId() + " Trip from  " + f.getDeparture() + " to " + f.getDestination());
+        }
+    }
+
+    /**
+     * Add a trip
+     * @throws SQLException
+     */
     private static void addTrip() throws SQLException {
         Trip trip = new Trip();
 
@@ -199,8 +219,8 @@ public class Launcher {
         trip.setDeparture(place);
 
         System.out.print("Destination: ");
-        place = findPlace();
-        trip.setDestination(place);
+        Place place1 = findPlace();
+        trip.setDestination(place1);
 
         System.out.print("Price: ");
         Float price = Float.valueOf(new Scanner(System.in).nextInt());
