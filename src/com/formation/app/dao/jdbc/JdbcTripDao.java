@@ -34,8 +34,8 @@ public class JdbcTripDao extends JdbcDao implements TripDao<Long, Trip> {
             String query = "INSERT INTO Trip (departure,destination,price) VALUES (?,?,?)";
             Connection connection = ConnectionManager.getConnection();
             try(PreparedStatement pst = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-                pst.setObject(1, tripToCreate.getDeparture());
-                pst.setObject(2, tripToCreate.getDestination());
+                pst.setLong(1, tripToCreate.getDeparture().getId());
+                pst.setLong(2, tripToCreate.getDestination().getId());
                 pst.setFloat(3, tripToCreate.getPrice());
                 pst.execute();
 
@@ -60,9 +60,10 @@ public class JdbcTripDao extends JdbcDao implements TripDao<Long, Trip> {
         }
 
     private Trip mapToTrip(ResultSet rs) throws SQLException {
+        JdbcPlaceDao jpd = new JdbcPlaceDao();
         Long id = rs.getLong("id");
-        String departure = rs.getString("departure");
-        String destination = rs.getString("destination");
+        Place departure = jpd.findPlaceById(rs.getLong("departure"));
+        Place destination = jpd.findPlaceById(rs.getLong("destination"));
         Float price = rs.getFloat("price");
         return new Trip(id,departure, destination,price);
     }

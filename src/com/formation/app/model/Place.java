@@ -1,6 +1,8 @@
 package com.formation.app.model;
 
-public class Place {
+import java.io.Serializable;
+
+public class Place implements Serializable {
 
     private Long id;
     private String name;

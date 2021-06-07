@@ -1,6 +1,8 @@
 package com.formation.app.model;
 
-public class Trip {
+import java.io.Serializable;
+
+public class Trip implements Serializable {
 
     private Long id;
     private Place departure;
@@ -8,7 +10,8 @@ public class Trip {
     private Float price;
 
 
-    public Trip(Place departure, Place destination, Float price) {
+    public Trip(Long id, Place departure, Place destination, Float price) {
+        this.id = id;
         this.departure = departure;
         this.destination = destination;
         this.price = price;
