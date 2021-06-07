@@ -48,6 +48,14 @@ public class Launcher {
                 addTrip();
                 break;
 
+            case 8:
+                findTrip();
+                break;
+
+            case 9:
+                removeTrip();
+                break;
+
             default:
                 System.out.println("Wrong input \n");
                 break;
@@ -233,8 +241,54 @@ public class Launcher {
         } else {
             System.out.println("Error, impossible to add the trip.");
         }
-
     }
 
+
+    private static void removeTrip() throws SQLException {
+        Trip trip = findTrip();
+        if (trip != null) {
+            System.out.println("Are you sure you want to remove it ? [yes/no]");
+            Scanner scanner = new Scanner(System.in);
+            String choice = scanner.next();
+            if (choice.equalsIgnoreCase("yes")) {
+                if (DaoFactory.getTripDao().removeTrip(trip)) {
+                    System.out.println("Trip removed !");
+                } else {
+                    System.out.println("Impossible to remove the Trip.");
+                }
+            }
+        }
+    }
+
+    /**
+     * Find a trip
+     * @return
+     * @throws SQLException
+     */
+        private static Trip findTrip() throws SQLException {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Please enter the id of the trip : ");
+            long choice = scanner.nextInt();
+            Trip trip = DaoFactory.getTripDao().findTripById((long) choice);
+            displayTrip(trip);
+            return trip;
+        }
+
+    /**
+     * Display a trip
+     * @param trip
+     */
+    private static void displayTrip(Trip trip) {
+        if(trip!= null) {
+            System.out.println("Trip: " + trip.getId());
+        } else {
+            System.out.println("Unknown place.");
+        }
+    }
+
+
+
 }
+
+
 

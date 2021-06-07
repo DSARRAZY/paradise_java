@@ -94,8 +94,27 @@ public class JdbcTripDao extends JdbcDao implements TripDao<Long, Trip> {
 
     @Override
     public boolean removeTrip(Trip trip) {
-        return false;
+        boolean isDeleted = false;
+        String query = "DELETE FROM Trip WHERE id=?";
+        Connection connection = ConnectionManager.getConnection();
+        try (PreparedStatement pst = ConnectionManager.getConnection().prepareStatement(query)){
+            pst.setLong(1, trip.getId());
+            isDeleted = pst.execute();
+            connection.commit();
+        } catch (SQLException e1){
+            e1.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e2){
+                e2.printStackTrace();
+            }
+        }
+        return isDeleted;
     }
+
+
+
+
 
     @Override
     public List<Trip> findTripByDeparture(Place place) {
