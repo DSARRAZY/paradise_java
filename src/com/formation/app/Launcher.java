@@ -203,7 +203,7 @@ public class Launcher {
     private static void allTrip() throws SQLException {
         List<Trip> tripList = DaoFactory.getTripDao().findAll();
         for (Trip f: tripList) {
-            System.out.println("ID " + f.getId() + " Trip from  " + f.getDeparture() + " to " + f.getDestination());
+            System.out.println("ID " + f.getId() + " Trip cost  " + f.getPrice() + " to " + f.getDestination().getName()+ " from "+f.getDeparture().getName());
         }
     }
 
@@ -229,7 +229,7 @@ public class Launcher {
         Trip id = DaoFactory.getTripDao().createTrip(trip);
 
         if (id != null) {
-            System.out.println("Trip added with the ID= " + id.getId() + " FROM " + trip.getDeparture());
+            System.out.println("Trip added with the ID= " + id.getId() + " FROM " + trip.getDeparture().getName());
         } else {
             System.out.println("Error, impossible to add the trip.");
         }
